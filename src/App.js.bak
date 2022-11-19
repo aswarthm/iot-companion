@@ -1,0 +1,82 @@
+import React from 'react';
+import './App.css';
+
+function App() {
+  const [todos, setTodos] = React.useState([
+    {id:1, text:"1", done:false},
+    {id:2, text:"2", done:false},
+    {id:3, text:"3", done:false},
+  ])
+
+  return (
+    <div className="App">
+      <h1>Todo List</h1>
+      <TodoList todos={todos} setTodos={setTodos} />
+      <AddTodo setTodos={setTodos}/>
+    </div>
+  );
+}
+
+export default App;
+
+
+function TodoList({todos, setTodos}){
+  function handleToggleTodo(todo){
+    const updatedTodos = todos.map((t) =>
+      t.id === todo.id
+        ? {
+            ...t,
+            done: !t.done
+          }
+        : t
+    )
+      setTodos(updatedTodos)
+  }
+
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} className={todo.done?"done":"notDone"} onDoubleClick={() => handleToggleTodo(todo)}>
+          {todo.text}
+          <DeleteTodo todo={todo} setTodos={setTodos}/>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function AddTodo({setTodos}){
+  const inputRef = React.useRef()
+
+  function handleAddTodo(event){
+    const text = inputRef.current.value
+    console.log(text)
+    var todo = {
+      id:30,
+      text:text,
+      done:false
+    }
+    setTodos(prevTodos => {
+      return prevTodos.concat(todo)
+    })
+    inputRef.current.value = ""
+  }
+
+  return(
+    <div>
+      <input name="addTodo" ref={inputRef}/>
+      <button onClick={() => handleAddTodo()}>Add</button>
+    </div>
+  )
+}
+
+function DeleteTodo({todo, setTodos}){
+  function handleDeleteTodo(todo){
+    setTodos(prevTodos => {
+      return prevTodos.filter(t => t.id !== todo.id)
+    })
+  }
+  return(
+    <span onClick={() => handleDeleteTodo(todo)} role="button" style={{marginLeft:20, cursor:"pointer"}}>X</span>
+  )
+}

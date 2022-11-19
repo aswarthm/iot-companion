@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Layout from "./Layout";
+import Home from "./Home";
+import Cart from "./Cart";
 
 function App() {
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("https://iot-companion.azurewebsites.net/api/getItems?")
+    .then(response => response.json())
+    .then(data => setProducts(data))
+  }, [])
+
+  const [cart, setCart] = React.useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home products={products} setCart={setCart} cart={cart} />} />
+          <Route path="cart" element={<Cart setCart={setCart} cart={cart} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
