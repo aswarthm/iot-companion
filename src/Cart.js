@@ -4,6 +4,8 @@
  * collect email or phone number
  * maybe animate steps with opening closing divs
  * disable checkout till all info is entered
+ * validate name, email
+ * clear cart, name, email after validate + checkout
  * 
  */
 import React from "react";
@@ -13,6 +15,8 @@ import ItemQuantityHandler from "./ItemQuantityHandler";
 
 function Cart({ cart, setCart }) {
   const [isLoading, setLoading] = React.useState(false)
+  const [name, setName] = React.useState()
+  const [mail, setMail] = React.useState()
 
   function getCartItems({ cart }) {
     if(cart.length === 0){
@@ -40,13 +44,23 @@ function Cart({ cart, setCart }) {
               ))}
             </div>
             <div className="checkout">
-              <div className="cartTotalPrice">Cart Total: {getCartTotal()}</div>
-              <div className="checkoutBtn" role="button" onClick={() => handleCheckout()}>Checkout</div>
+              <div className="checkoutInfo">
+                <div className="infoLabel">Name: </div>
+                <input className="infoInput" type="name" onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="checkoutInfo">
+                <div className="infoLabel">Email ID: </div>
+                <input className="infoInput" type="email" onChange={(e) => setMail(e.target.value)} />
+              </div>
+              <div className="checkoutFinal">
+                <div className="cartTotalPrice">Cart Total: {getCartTotal()}</div>
+                <div className="checkoutBtn" role="button" onClick={() => handleCheckout()}>Checkout</div>
+              </div>
             </div>
             {
               isLoading
               ?(
-                <div className="cartLoader">
+                <div className="loader">
                   <BounceLoader 
                     color="#9dd9ff"
                     speedMultiplier={2}
@@ -80,12 +94,12 @@ function Cart({ cart, setCart }) {
 
     setLoading(true)
 
-    const order = {
-      order_id: "111",  
-      cust_name: "lol",
+    const order = { 
+      name: name,
+      mail: mail,
       items: cart
     }
-    
+    console.log(order)
     const orderReq = await fetch("https://iot-companion.azurewebsites.net/api/newOrder?code=gWR-FEj-10XwvCgTEKponrY2wtPLxIgTMqJ-f_O1xK1VAzFu4eg9FA==",
                     {  
                       headers: {
@@ -93,7 +107,7 @@ function Cart({ cart, setCart }) {
                         'Content-Type': 'application/json'
                       },
                       'method': 'POST',
-                      'body': JSON.stringify(cart)
+                      'body': JSON.stringify(order) 
                     })
 
     const orderResp = await orderReq.json()
