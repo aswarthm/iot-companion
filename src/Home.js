@@ -1,4 +1,6 @@
 import React from "react";
+import { BounceLoader } from "react-spinners";
+
 import ItemQuantityHandler from "./ItemQuantityHandler";
 
 function Home({ products, setCart, cart }) {
@@ -15,16 +17,41 @@ function Home({ products, setCart, cart }) {
 export default Home;
 
 function ProductsList({ products, setCart , cart}) {
+  
+  function showLoader(){
+    if(!products){
+      return true
+    }
+    else if(!products.length){
+      return true
+    }
+
+    return false
+  }
+
   return (
     <div className="productsList">
-      {products.map((product) => (
+      {
+        showLoader()?
+        (
+            <div className="loader">
+              <BounceLoader
+                color="#9dd9ff"
+                speedMultiplier={2}
+              />
+            </div>
+        )
+        :(
+          products.map((product) => (
         <ProductCard
           key={product.product_code}
           product={product}
           setCart={setCart}
           cart={cart}
         />
-      ))}
+      ))
+        )
+      }
     </div>
   );
 }
@@ -32,7 +59,6 @@ function ProductsList({ products, setCart , cart}) {
 function ProductCard({ product, setCart , cart}) {
 
   function handleAddToCart({ product }) {
-    console.log(product.name)
     if (cart.some(item => item.product_code === product.product_code)) {
       setCart( (cartItems) => 
         cartItems.map(item => 
