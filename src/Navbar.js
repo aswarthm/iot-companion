@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Link, useLocation, matchRoutes } from "react-rout
 
 function Navbar(){
     const location = useLocation()
-    console.log(location.pathname)
     
     function getNavItems(){
         const routes = [
@@ -14,8 +13,13 @@ function Navbar(){
             {
                 path: "/cart",
                 name: "Cart"
+            },
+            {
+                path: "/track",
+                name: "Track"
             }
         ]
+        
         return(
             routes.map(route => 
                     <Link to={route.path}  key={route.name} role="button" className={"navBtn".concat(route.path === location.pathname?"Current":"")}>{route.name}</Link>
