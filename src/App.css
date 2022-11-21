@@ -135,14 +135,38 @@ img{
 
 .checkout{
   background-color: rgb(157, 217, 255);
-  display: flex;
-  flex-flow: row wrap;
   margin: 10px;
   margin-top: 30px;
   justify-content:space-between;
   align-items: baseline;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 20px -6px rgba(0,0,0,0.23);
+}
+
+.checkoutInfo{
+  display: flex;
+  font-size: x-large;
+}
+
+.infoLabel{
+  margin: 15px;
+  white-space: nowrap;
+}
+
+.infoInput{
+  all: unset;
+  background-color: rgb(192, 230, 253);
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.checkoutFinal{
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 30px;
 }
 
 .cartTotalPrice{
@@ -164,15 +188,17 @@ img{
 }
 
 
-.loader{  
-  height: 50px;
-  width: 50px;
+/* .loader{  
+  background-color: white;
+  border-radius: 15px;
+  height: 150px;
+  width: 150px;
   position: absolute;
   left: 40%;
   top: 40%;
-}
+} */
 
-.cartLoader{
+.loader{
   position: absolute;
   top: 40%;
   left: 40%;
@@ -180,7 +206,51 @@ img{
   height: fit-content;
   padding:50px;
   border-radius: 15px;
-  background-color: rgba(255, 242, 144, 0.5);
+  /* background-color: rgba(255, 242, 144, 0.5); */
+  background-color: white;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 20px -6px rgba(0,0,0,0.23);
   backdrop-filter: blur(10px);
+}
+.searchBar{
+  background-color: rgb(157, 217, 255);
+  font-size:x-large;
+  margin: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 20px -6px rgba(0,0,0,0.23);
+  display: flex ;
+  justify-content: space-between;
+}
+
+.inputOrderID{
+  all: unset;
+  background-color: rgb(192, 230, 253);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+  border: none;
+  font-size: large;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.searchBtn{
+  background-color: rgb(255, 184, 184);
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 30px;
+  margin: 5px;
+  float: right;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.trackCard{
+  background-color: rgb(192, 230, 253);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 20px -6px rgba(0,0,0,0.23);
+}
+
+.trackItem{
+  margin: 20px;
 }
