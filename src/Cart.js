@@ -1,3 +1,11 @@
+/**
+ * TODO
+ * send cart with cust name
+ * collect email or phone number
+ * maybe animate steps with opening closing divs
+ * disable checkout till all info is entered
+ * 
+ */
 import React from "react";
 import { BounceLoader } from "react-spinners"
 
@@ -49,8 +57,6 @@ function Cart({ cart, setCart }) {
                 <div></div>
               )
             }
-              </div>
-            ))
           </>
         )
       }
