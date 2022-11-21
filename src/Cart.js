@@ -1,7 +1,10 @@
 import React from "react";
+import { BounceLoader } from "react-spinners"
+
 import ItemQuantityHandler from "./ItemQuantityHandler";
 
 function Cart({ cart, setCart }) {
+  const [isLoading, setLoading] = React.useState(false)
 
   function getCartItems({ cart }) {
     if(cart.length === 0){
@@ -32,6 +35,20 @@ function Cart({ cart, setCart }) {
               <div className="cartTotalPrice">Cart Total: {getCartTotal()}</div>
               <div className="checkoutBtn" role="button" onClick={() => handleCheckout()}>Checkout</div>
             </div>
+            {
+              isLoading
+              ?(
+                <div className="cartLoader">
+                  <BounceLoader 
+                    color="#9dd9ff"
+                    speedMultiplier={2}
+                  />
+                </div>
+              )
+              :(
+                <div></div>
+              )
+            }
               </div>
             ))
           </>
