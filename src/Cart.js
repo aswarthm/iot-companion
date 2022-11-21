@@ -9,11 +9,13 @@
  * 
  */
 import React from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { BounceLoader } from "react-spinners"
 
 import ItemQuantityHandler from "./ItemQuantityHandler";
 
 function Cart({ cart, setCart }) {
+  const navigate = useNavigate()
   const [isLoading, setLoading] = React.useState(false)
   const [name, setName] = React.useState()
   const [mail, setMail] = React.useState()
@@ -86,7 +88,6 @@ function Cart({ cart, setCart }) {
       const item = cart[i]
       cartTotal += getItemTotal({item})
     }
-    console.log(cartTotal)
     return(cartTotal)
   }
 
@@ -114,6 +115,12 @@ function Cart({ cart, setCart }) {
     console.log(orderResp)
 
     //setCart([])
+    navigate({
+      pathname:"/track",
+      search: createSearchParams({
+          id: orderResp.order_id
+      }).toString()
+    })
     setLoading(false)
   }
 
