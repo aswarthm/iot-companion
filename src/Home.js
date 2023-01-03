@@ -34,11 +34,13 @@ function ProductsList({ products, setCart , cart}) {
       {
         showLoader()?
         (
-            <div className="loader">
-              <BounceLoader
-                color="#9dd9ff"
-                speedMultiplier={2}
-              />
+          <div className="loaderContainer">
+                <div className="loader">
+                <BounceLoader
+                    color="#9dd9ff"
+                    speedMultiplier={2}
+                />
+                </div>
             </div>
         )
         :(
@@ -98,8 +100,8 @@ function ProductCard({ product, setCart , cart}) {
         src={product.img_url}
         width={150}
       />
-      <div>{product.name}</div>
-      <div>{product.quantity}</div>
+      <div className="productName">{product.name}</div>
+      <div className="productPrice">{product.price}</div>
       {getAddToCartButton({product})}
     </div>
   );

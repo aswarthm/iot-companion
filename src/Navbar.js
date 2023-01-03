@@ -28,7 +28,7 @@ function Navbar(){
     }
     return(
         <nav>
-            {getNavItems()}
+            <div className="navBar">{getNavItems()}</div>
         </nav>
     )
 }

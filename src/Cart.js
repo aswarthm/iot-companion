@@ -1,10 +1,10 @@
 /**
  * TODO
- * send cart with cust name
- * collect email or phone number
+ * DONE send cart with cust name
+ * DONE collect email or phone number
  * maybe animate steps with opening closing divs
- * disable checkout till all info is entered
- * validate name, email
+ * DONE disable checkout till all info is entered
+ * DONE validate name, email
  * clear cart, name, email after validate + checkout
  * 
  */
@@ -20,11 +20,48 @@ function Cart({ cart, setCart }) {
   const [name, setName] = React.useState()
   const [mail, setMail] = React.useState()
 
+  const nameRef = React.useRef()
+  const mailRef = React.useRef()
+
+  const [nameError, setNameError] = React.useState(false)
+  const [mailError, setMailError] = React.useState(false)
+
+  function handleMailChange(e){
+    setMail(e.target.value)
+    if(mailError){
+      if(e.target.validity.valid){
+        setMailError(false)
+      }
+    }
+  }
+
+  function handleMailBlur(e){
+    if(!e.target.validity.valid || e.target.value === ""){
+      //invalid
+      setMailError(true)
+    }
+  }
+
+  function handleNameChange(e){
+    setName(e.target.value)
+    if(nameError){
+      if(e.target.value !== ""){
+        setNameError(false)
+      }
+    }
+  }
+
+  function handleNameBlur(e){
+    if(e.target.value === ""){
+      setNameError(true)
+    }
+  }
+
   function getCartItems({ cart }) {
     if(cart.length === 0){
         return(
             <div className="cart empty">
-                Wow, such empty :0
+                Cart is empty
             </div>
         )
     }
@@ -35,7 +72,7 @@ function Cart({ cart, setCart }) {
               {cart.map((item) => (
                 <div key={item.product_code} className="cartItem">
                   <div>
-                    <div>{item.name}</div>
+                    <div className="cartItemLabel">{item.name}</div>
                     <div className="cartItemPrice">{item.price}</div>
                   </div>
                   <div className="cartItemQuantityHandler">
@@ -48,11 +85,29 @@ function Cart({ cart, setCart }) {
             <div className="checkout">
               <div className="checkoutInfo">
                 <div className="infoLabel">Name: </div>
-                <input className="infoInput" type="name" onChange={(e) => setName(e.target.value)} />
+                <input className="infoInput" placeholder="Name" type="name" onChange={(e) => handleNameChange(e)} onBlur={(e) => handleNameBlur(e)} ref={nameRef} />
               </div>
               <div className="checkoutInfo">
                 <div className="infoLabel">Email ID: </div>
-                <input className="infoInput" type="email" onChange={(e) => setMail(e.target.value)} />
+                <input className="infoInput" placeholder="name@example.com" type="email" name="mail" onChange={(e) => handleMailChange(e)} onBlur={(e) => handleMailBlur(e)} ref={mailRef} />
+              </div>
+              <div className="inputError">
+                {
+                  nameError?(
+                    <div>Name cannot be empty</div>
+                  )
+                  :(
+                    <div></div>
+                  )
+                }
+                {
+                  mailError?(
+                    <div>Enter a valid Email ID</div>
+                  )
+                  :(
+                    <div></div>
+                  )
+                }
               </div>
               <div className="checkoutFinal">
                 <div className="cartTotalPrice">Cart Total: {getCartTotal()}</div>
@@ -62,11 +117,13 @@ function Cart({ cart, setCart }) {
             {
               isLoading
               ?(
-                <div className="loader">
-                  <BounceLoader 
-                    color="#9dd9ff"
-                    speedMultiplier={2}
-                  />
+                <div className="loaderContainer">
+                  <div className="loader">
+                    <BounceLoader
+                        color="#9dd9ff"
+                        speedMultiplier={2}
+                    />
+                  </div>
                 </div>
               )
               :(
@@ -92,6 +149,26 @@ function Cart({ cart, setCart }) {
   }
 
   async function handleCheckout(){
+
+    if(!name){//check undefined
+      nameRef.current.focus()
+      setNameError(true)
+      return
+    }
+    if(!mail){
+      mailRef.current.focus()
+      setMailError(true)
+      return
+    }
+
+    if(nameError){ //check validity
+      nameRef.current.focus()
+      return
+    }    
+    if(mailError){
+      mailRef.current.focus()
+      return
+    }
 
     setLoading(true)
 
@@ -121,12 +198,10 @@ function Cart({ cart, setCart }) {
           id: orderResp.order_id
       }).toString()
     })
-    setLoading(false)
   }
 
   return (
     <>
-      <h1>Cart</h1>
       {getCartItems({cart})}
 
     </>

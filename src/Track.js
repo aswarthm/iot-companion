@@ -1,8 +1,8 @@
 /**
  * TODO
- * add text box for order id
- * button to search more ids
- * validate before toTrackPage
+ * DONE add text box for order id
+ * DONE button to search more ids
+ * DONE validate before toTrackPage
  */
 
 import React from "react";
@@ -33,13 +33,8 @@ function Track({products}){
             .then(response => response.json())
             .then(data => setOrder(data))
             .then(() => setLoading(false))
-            // setLoading(false)
-            // console.log("fetch end")
+            //.then(() => console.log(order))
         }
-        // else{
-        //     setOrder()
-        //     setLoading(false)
-        // }
     }, [urlOrderID])
 
     const [orderID, setOrderID] = React.useState(urlOrderID)
@@ -70,6 +65,15 @@ function Track({products}){
         }
     }
 
+    function validOrder(){
+        
+        if(!order || Object.keys(order).length === 0 || order === undefined){
+            return false
+        }
+        else{
+            return true
+        }
+    }
     function getOrderTracker(){
 
         if(!order || !urlOrderID){
@@ -78,20 +82,39 @@ function Track({products}){
             )
         }
 
-        if(/[0-9]{4}(\-)[0-9]{6}(\-)[0-9]{4}/g.test(urlOrderID) && !!order){
+        //if(/[0-9]{4}(\-)[0-9]{6}(\-)[0-9]{4}/g.test(urlOrderID) && !!order){
             return(
-                <div className="trackCard">
-                  {order.items.map((item) => (
-                    <div key={item.product_code} className="trackItem">
-                        <div className="trackItemName">{item.name}</div>
-                        <div className="trackItemPrice">{item.price}</div>
-                        <div className="trackItemQuantity">{item.quantity}</div>
+                <>{
+                    validOrder()?
+                    (
+                    <>
+                    <div className="trackCard">
+                    {order.items?.map((item) => (
+                        <div key={item.product_code} className="trackItem">
+                            <div className="trackItemLeft">
+                                <div className="trackItemName">{item.name}</div>
+                                <div className="trackItemPrice">{item.price}</div>
+                            </div>
+                            <div className="trackItemRight">
+                                <div className="trackItemQuantity">x{item.quantity}</div>
+                                <div>{parseInt(item.price * item.quantity)}</div>
+                            </div>
+                        </div>
+                    ))}
                     </div>
-                  ))}
-    
-                </div>
+                    <div className="trackInfo">
+                        <div className="trackTotalPrice" >Order Total: {order.cart_total}</div>
+                    </div>
+                    </>
+                    )
+                    :(
+                        <div className="trackCard empty">
+                            Enter a valid Order ID
+                        </div>
+                    )}
+                </>
             )
-        }
+        //}
     }
 
     function toTrackPage(url){
@@ -108,11 +131,13 @@ function Track({products}){
         {
         isLoading
         ?(
-            <div className="loader">
-            <BounceLoader 
-                color="#9dd9ff"
-                speedMultiplier={2}
-            />
+            <div className="loaderContainer">
+                <div className="loader">
+                <BounceLoader
+                    color="#9dd9ff"
+                    speedMultiplier={2}
+                />
+                </div>
             </div>
         )
         :(
