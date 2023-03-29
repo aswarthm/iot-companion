@@ -1,0 +1,17 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "WEBSITE_SLOT_NAME": "Production",
+    "FUNCTIONS_EXTENSION_VERSION": "~4",
+    "ScmType": "None",
+    "WEBSITE_AUTH_ENABLED": "False",
+    "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=9c340e06-9f37-408a-a096-74c943ca5cfc;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/",
+    "APPINSIGHTS_INSTRUMENTATIONKEY": "9c340e06-9f37-408a-a096-74c943ca5cfc",
+    "WEBSITE_NODE_DEFAULT_VERSION": "16.16.0",
+    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=aswarthhelloworldgra28d;AccountKey=mTwhDBlIn9w7EfyvPuZ+9UXy2GxmX27p4QGRuUVAxRJjCu+KqQjzKxujEbZmINPzbBYH03prCr8g+AStPBQ9LQ==;EndpointSuffix=core.windows.net",
+    "WEBSITE_CONTENTSHARE": "iot-companion9594",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "WEBSITE_SITE_NAME": "iot-companion",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=aswarthhelloworldgra28d;AccountKey=mTwhDBlIn9w7EfyvPuZ+9UXy2GxmX27p4QGRuUVAxRJjCu+KqQjzKxujEbZmINPzbBYH03prCr8g+AStPBQ9LQ==;EndpointSuffix=core.windows.net"
+  }
+}
