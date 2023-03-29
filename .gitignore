@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/azure-cloud-functions/node_modules
 
 # testing
 /coverage
