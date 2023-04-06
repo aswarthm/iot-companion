@@ -61,6 +61,8 @@ async function makeOrder(context, products, cart_order){
      * cart_total
      * 
      */
+    context.log("before")
+    context.log(products)
     for(var i in cart_items){
         const cart_item = cart_items[i];
         const product_index = products.findIndex(item => item.product_code === cart_item.product_code)
@@ -81,6 +83,8 @@ async function makeOrder(context, products, cart_order){
         products[product_index].quantity -= cart_item.quantity
         order.items.push(newCartItem)
     }
+    context.log("after")
+    context.log(products)
     order.cart_total = cartTotal(order.items)
 
     container.item("orders").patch([{ op: 'add', path: "/data/".concat(order_id), value: order }])
