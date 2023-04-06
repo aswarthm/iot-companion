@@ -1,7 +1,7 @@
 import React from "react"
 
 
-function ItemQuantityHandler({ item, setCart }){
+function ItemQuantityHandler({ item, setCart, products }){
 
     function handleQuantityDec({item}){
         if(item.quantity === 1){
@@ -20,16 +20,19 @@ function ItemQuantityHandler({ item, setCart }){
     }
   
     function handleQuantityInc({item}){
-      setCart( (cartItems) => 
-        cartItems.map( i => 
-            i.product_code === item.product_code
-            ?{
-              ...i,
-              quantity: i.quantity+1
-            }
-            :i
-          )
-      )
+      // console.log(products.find(i => i.product_code === item.product_code).quantity)
+      if(item.quantity < products.find(i => i.product_code === item.product_code).quantity){
+        setCart( (cartItems) => 
+          cartItems.map( i => 
+              i.product_code === item.product_code
+              ?{
+                ...i,
+                quantity: i.quantity+1
+              }
+              :i
+            )
+        )
+      }
     }
   
     function handleItemRemove({item}){

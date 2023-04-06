@@ -1,7 +1,7 @@
 /**
  * TODO
- * order status - ordered, collected - return by, returned
- * ordered date, collected date, return date
+ * DONE order status - ordered, collected - return by, returned
+ * DONE ordered date, collected date, return date
  * dont send private data from server
  * DONE add text box for order id
  * DONE button to search more ids
@@ -114,13 +114,13 @@ function Track({products}){
                     <div className="trackInfo">
                         <div className="trackTotalPrice">Order Total: {order.cart_total}</div>
                         <div className="trackOrderName">{order.name}</div>
-                        <div className="trackUserTime">Ordered On {formatDate(order.order_time)}</div>
+                        <div className="trackUserTime">Ordered On <div>{formatDate(order.order_time)}</div></div>
                         {order.order_status===0?
                             (
                                 <div className="trackStatus">Collect Items Within 2 Days</div>
                             )
                             :(
-                                <div className="trackStatus">Collected, Return Items by {formatDate(order.return_time)}</div>
+                                <div className="trackStatus">Collected, <div>Return Items by {formatDate(order.return_time)}</div></div>
                             )
                         }
                     </div>

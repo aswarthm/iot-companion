@@ -48,6 +48,7 @@ function ProductsList({ products, setCart , cart}) {
         <ProductCard
           key={product.product_code}
           product={product}
+          products={products}
           setCart={setCart}
           cart={cart}
         />
@@ -58,7 +59,7 @@ function ProductsList({ products, setCart , cart}) {
   );
 }
 
-function ProductCard({ product, setCart , cart}) {
+function ProductCard({ product, products, setCart , cart}) {
 
   function handleAddToCart({ product }) {
     if (cart.some(item => item.product_code === product.product_code)) {
@@ -85,9 +86,12 @@ function ProductCard({ product, setCart , cart}) {
   }
 
   function getAddToCartButton({ product }){
-    const i = cart.findIndex(item => item.product_code === product.product_code)
-    if(i > -1){
-      return(<ItemQuantityHandler item={cart[i]} setCart={setCart} />)
+    const i = cart.find(item => item.product_code === product.product_code)
+    if(products.find(item => item.product_code === product.product_code).quantity === 0){
+      return <div className="addToCartBtn soldout">Sold Out</div>
+    }
+    if(i){
+      return(<ItemQuantityHandler item={i} setCart={setCart} products={products} />)
     }
     else{
       return(<div className="addToCartBtn" role="button" onClick={() => handleAddToCart({ product })}>Add To Cart</div>)

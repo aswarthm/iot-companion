@@ -34,7 +34,6 @@ function cartTotal(cart_items){
 async function makeOrder(context, products, cart_order){
     const cart_items = cart_order.items
     const order_id = getOrderID()
-    const cart_total = cartTotal(cart_items)
 
     var order = {
         order_id: order_id,
@@ -42,15 +41,18 @@ async function makeOrder(context, products, cart_order){
         name: cart_order.name,
         mail: cart_order.mail,
         order_time: Date.now(),
-        return_time: 1683337974,
-        cart_total: -3,
+        return_time: 1683337974000,
+        cart_total: null,
         items: []
     };
      /**
      * order
      * id
-     * order time
+     * order status -> ordered-0, collected-1, returned-2
      * cust name
+     * cust mail
+     * order time
+     * return time
      * cart_total
      * items
      * 
@@ -69,17 +71,24 @@ async function makeOrder(context, products, cart_order){
             "price": product.price,
             "quantity": cart_item.quantity
         }
+        if(cart_item.quantity > product.quantity){
+            context.res = {
+                // status: 200, /* Defaults to 200 */
+                body: "err quantity"
+            }
+            return;
+        }
+        products[product_index].quantity -= cart_item.quantity
         order.items.push(newCartItem)
     }
     order.cart_total = cartTotal(order.items)
-    
-    const operations =[{ op: 'add', path: "/data/".concat(order_id), value: order }];
 
-    container.item("orders").patch(operations)
+    container.item("orders").patch([{ op: 'add', path: "/data/".concat(order_id), value: order }])
+    container.item("products").patch([{ op: 'add', path: "/data/", value: products }])
     
     const resp = {
-        order_id: order_id,
-        cart_total: cart_total
+        order_id: order.order_id,
+        cart_total: order.cart_total
     }
     context.res = {
         // status: 200, /* Defaults to 200 */

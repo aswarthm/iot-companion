@@ -7,6 +7,7 @@
   --color-2: rgb(157, 217, 255);
   --color-3: rgb(255, 184, 184);
   --color-4: rgba(192, 230, 253, 0.85);
+  --color-5: rgba(255, 184, 184, 0.708);
   --text-1: #111111;
   --text-2: #111111;
 
@@ -21,6 +22,7 @@
   --card: rgb(157, 217, 255);
   --button: rgb(255, 184, 184); */
 }
+
 .productName{
  color: var(--text-1); 
 }
@@ -112,6 +114,10 @@ img{
 }
 .addToCartBtn:hover:enabled {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.soldout{
+  background-color: var(--color-5);
+  cursor: default;
 }
 
 .itemQuantity{
@@ -368,6 +374,8 @@ img{
 
 .trackUserTime{
   font-size: x-large;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .trackStatus{
