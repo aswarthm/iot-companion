@@ -84,7 +84,7 @@ async function makeOrder(context, products, cart_order){
     order.cart_total = cartTotal(order.items)
 
     container.item("orders").patch([{ op: 'add', path: "/data/".concat(order_id), value: order }])
-    container.item("products").patch([{ op: 'set', path: "/data/", value: {products} }])
+    container.item("products").patch([{ op: 'set', path: "/data", value: products }])
     
     const resp = {
         order_id: order.order_id,
