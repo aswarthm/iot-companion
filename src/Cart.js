@@ -14,7 +14,7 @@ import { BounceLoader } from "react-spinners"
 
 import ItemQuantityHandler from "./ItemQuantityHandler";
 
-function Cart({ cart, setCart }) {
+function Cart({ cart, setCart, products }) {
   const navigate = useNavigate()
   const [isLoading, setLoading] = React.useState(false)
   const [name, setName] = React.useState()
@@ -76,7 +76,7 @@ function Cart({ cart, setCart }) {
                     <div className="cartItemPrice">{item.price}</div>
                   </div>
                   <div className="cartItemQuantityHandler">
-                    <ItemQuantityHandler item={item} setCart={setCart} />
+                    <ItemQuantityHandler item={item} setCart={setCart} products={products} />
                     <div className="itemTotalPrice">{getItemTotal({item})}</div>
                   </div>
                 </div>
