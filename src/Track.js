@@ -1,5 +1,8 @@
 /**
  * TODO
+ * order status - ordered, collected - return by, returned
+ * ordered date, collected date, return date
+ * dont send private data from server
  * DONE add text box for order id
  * DONE button to search more ids
  * DONE validate before toTrackPage
@@ -7,6 +10,7 @@
 
 import React from "react";
 import { BounceLoader } from "react-spinners"
+import moment from "moment/moment";
 
 import { useSearchParams, useNavigate, createSearchParams } from "react-router-dom"
 
@@ -74,6 +78,11 @@ function Track({products}){
             return true
         }
     }
+
+    function formatDate(timestamp){
+        return moment(timestamp).format("dddd, MMMM Do YYYY");
+    }
+
     function getOrderTracker(){
 
         if(!order || !urlOrderID){
@@ -89,21 +98,31 @@ function Track({products}){
                     (
                     <>
                     <div className="trackCard">
-                    {order.items?.map((item) => (
-                        <div key={item.product_code} className="trackItem">
-                            <div className="trackItemLeft">
-                                <div className="trackItemName">{item.name}</div>
-                                <div className="trackItemPrice">{item.price}</div>
+                        {order.items?.map((item) => (
+                            <div key={item.product_code} className="trackItem">
+                                <div className="trackItemLeft">
+                                    <div className="trackItemName">{item.name}</div>
+                                    <div className="trackItemPrice">{item.price}</div>
+                                </div>
+                                <div className="trackItemRight">
+                                    <div className="trackItemQuantity">x{item.quantity}</div>
+                                    <div>{parseInt(item.price * item.quantity)}</div>
+                                </div>
                             </div>
-                            <div className="trackItemRight">
-                                <div className="trackItemQuantity">x{item.quantity}</div>
-                                <div>{parseInt(item.price * item.quantity)}</div>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
                     </div>
                     <div className="trackInfo">
-                        <div className="trackTotalPrice" >Order Total: {order.cart_total}</div>
+                        <div className="trackTotalPrice">Order Total: {order.cart_total}</div>
+                        <div className="trackOrderName">{order.name}</div>
+                        <div className="trackUserTime">Ordered On {formatDate(order.order_time)}</div>
+                        {order.order_status===0?
+                            (
+                                <div className="trackStatus">Collect Items Within 2 Days</div>
+                            )
+                            :(
+                                <div className="trackStatus">Collected, Return Items by {formatDate(order.return_time)}</div>
+                            )
+                        }
                     </div>
                     </>
                     )

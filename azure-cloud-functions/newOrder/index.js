@@ -38,9 +38,11 @@ async function makeOrder(context, products, cart_order){
 
     var order = {
         order_id: order_id,
+        order_status: 0,
         name: cart_order.name,
         mail: cart_order.mail,
         order_time: Date.now(),
+        return_time: 1683337974,
         cart_total: cart_total,
         items: []
     };
